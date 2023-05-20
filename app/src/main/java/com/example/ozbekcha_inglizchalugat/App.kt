@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.ozbekcha_inglizchalugat.data.prefs.AppPreference
 import com.example.ozbekcha_inglizchalugat.di.appModule
 import com.example.ozbekcha_inglizchalugat.di.viewModelModule
-import com.example.ozbekcha_inglizchalugat.utils.DataStoreManager
+import com.example.ozbekcha_inglizchalugat.data.prefs.DataStoreManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent

@@ -1,4 +1,4 @@
-package com.example.ozbekcha_inglizchalugat.utils
+package com.example.ozbekcha_inglizchalugat.data.prefs
 
 import android.content.Context
 import androidx.datastore.core.DataStore

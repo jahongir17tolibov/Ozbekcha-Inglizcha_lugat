@@ -10,4 +10,14 @@
         android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.BaseFragment"
         android:label="fragment_base"
         tools:layout="@layout/fragment_base" />
+    <fragment
+        android:id="@+id/engUzbFragment"
+        android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.EngUzbFragment"
+        android:label="fragment_eng_uzb"
+        tools:layout="@layout/fragment_eng_uzb" />
+    <fragment
+        android:id="@+id/uzbEngFragment"
+        android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.UzbEngFragment"
+        android:label="fragment_uzb_eng"
+        tools:layout="@layout/fragment_uzb_eng" />
 </navigation>
