@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
                     android:layout_marginEnd="18dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/search_icon" />
 
             </com.google.android.material.appbar.MaterialToolbar>

@@ -21,13 +21,13 @@ class DictionaryEngAdapter : RecyclerView.Adapter<DictionaryEngAdapter.LettersIt
 
     private var onItemClickListener: ((DictionaryModel) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: ((DictionaryModel) -> Unit)? = null) {
+    fun setOnStarClickListener(listener: ((DictionaryModel) -> Unit)? = null) {
         onItemClickListener = listener
     }
 
     inner class LettersItemHolder(val b: LettersItemLyBinding) : RecyclerView.ViewHolder(b.root) {
 
-        @SuppressLint("ResourceAsColor")
+        @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
         fun bind(result: DictionaryModel) {
             val captLetter = result.english.take(1)
             b.apply {
@@ -39,6 +39,11 @@ class DictionaryEngAdapter : RecyclerView.Adapter<DictionaryEngAdapter.LettersIt
                 else R.color.light_dark_color
                 val color = ContextCompat.getColor(itemView.context, colorId)
                 addToFavouritesStar.imageTintList = ColorStateList.valueOf(color)
+
+                addToFavouritesStar.setOnClickListener {
+                    onItemClickListener?.invoke(result)
+                    notifyDataSetChanged()
+                }
             }
 
         }
@@ -55,11 +60,6 @@ class DictionaryEngAdapter : RecyclerView.Adapter<DictionaryEngAdapter.LettersIt
         val itemData = baseList[position]
 
         holder.bind(itemData)
-
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(itemData)
-            notifyDataSetChanged()
-        }
 
     }
 

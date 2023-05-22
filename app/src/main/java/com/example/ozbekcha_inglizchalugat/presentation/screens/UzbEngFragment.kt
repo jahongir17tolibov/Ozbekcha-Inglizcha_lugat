@@ -1,6 +1,7 @@
 package com.example.ozbekcha_inglizchalugat.presentation.screens
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.ozbekcha_inglizchalugat.domain.resource.DictionaryStateUI
 import com.example.ozbekcha_inglizchalugat.presentation.adapters.DictionaryUzbAdapter
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.DictionaryDataViewModel
 import com.example.ozbekcha_inglizchalugat.utils.BaseUtils.showSnackToast
+import com.example.ozbekcha_inglizchalugat.utils.Constants.LOG_TXT
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,6 +28,7 @@ class UzbEngFragment : Fragment(R.layout.fragment_uzb_eng) {
 
     private val viewModel by viewModel<DictionaryDataViewModel>()
     private val dictionaryUzbAdapter by lazy { DictionaryUzbAdapter() }
+    private var list = emptyList<DictionaryModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentUzbEngBinding.bind(view)
@@ -44,6 +47,7 @@ class UzbEngFragment : Fragment(R.layout.fragment_uzb_eng) {
         when (state) {
             is DictionaryStateUI.Success -> {
                 val sortedData = state.dictionaryData.sortedBy { it.uzbek }
+                list = state.dictionaryData
                 dictionaryUzbAdapter.baseList = sortedData
                 showProgress(false)
             }
@@ -67,7 +71,7 @@ class UzbEngFragment : Fragment(R.layout.fragment_uzb_eng) {
 
     private fun initClicks() {
         dictionaryUzbAdapter.setOnItemClickListener {
-            it.isFavourite = !it.isFavourite
+            it.checkFavourite()
         }
     }
 

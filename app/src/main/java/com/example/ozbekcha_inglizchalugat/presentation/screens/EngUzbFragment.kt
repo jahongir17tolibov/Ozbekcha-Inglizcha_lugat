@@ -1,10 +1,12 @@
 package com.example.ozbekcha_inglizchalugat.presentation.screens
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ozbekcha_inglizchalugat.R
@@ -14,6 +16,7 @@ import com.example.ozbekcha_inglizchalugat.domain.resource.DictionaryStateUI
 import com.example.ozbekcha_inglizchalugat.presentation.adapters.DictionaryEngAdapter
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.DictionaryDataViewModel
 import com.example.ozbekcha_inglizchalugat.utils.BaseUtils.showSnackToast
+import com.example.ozbekcha_inglizchalugat.utils.Constants.LOG_TXT
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,7 +27,7 @@ class EngUzbFragment : Fragment(R.layout.fragment_eng_uzb) {
 
     private val viewModel by viewModel<DictionaryDataViewModel>()
     private val dictionaryEngAdapter by lazy { DictionaryEngAdapter() }
-    private var list: List<DictionaryModel> = emptyList()
+    private val navigation by lazy { findNavController() }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEngUzbBinding.bind(view)
@@ -43,7 +46,6 @@ class EngUzbFragment : Fragment(R.layout.fragment_eng_uzb) {
         when (state) {
             is DictionaryStateUI.Success -> {
                 dictionaryEngAdapter.baseList = state.dictionaryData
-                list = state.dictionaryData
                 showProgress(false)
             }
 
@@ -66,8 +68,13 @@ class EngUzbFragment : Fragment(R.layout.fragment_eng_uzb) {
 
     private fun initClicks() {
 
-        dictionaryEngAdapter.setOnItemClickListener {
-            it.isFavourite = !it.isFavourite
+        dictionaryEngAdapter.setOnStarClickListener {
+            viewModel.toggleFavourite(it)
+        }
+
+        binding.floatingAcBtn.setOnClickListener {
+            val action = EngUzbFragmentDirections.actionEngUzbFragmentToFavouritesFragment()
+            findNavController().navigate(action)
         }
 
     }

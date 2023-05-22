@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = FAV_TABLE_NAME)
 @Parcelize
 data class FavouritesModel(
-    val type: String,
+    val id: String,
     val english: String,
     val transcript: String,
     val uzbek: String,
@@ -19,6 +19,6 @@ data class FavouritesModel(
 
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var favID: Int? = null
 
 }

@@ -9,6 +9,7 @@ import com.example.ozbekcha_inglizchalugat.domain.repo.MainRepositoryImpl
 import com.example.ozbekcha_inglizchalugat.domain.repo.RoomRepository
 import com.example.ozbekcha_inglizchalugat.domain.repo.RoomRepositoryImpl
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.DictionaryDataViewModel
+import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.FavouritesViewModel
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.ThemeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -30,7 +31,7 @@ val appModule = module {
 
     factory<MainRepository> { MainRepositoryImpl(get(), get()) }
 
-//    factory<RoomRepository> { RoomRepositoryImpl(get()) }
+    factory<RoomRepository> { RoomRepositoryImpl(get()) }
 
 }
 
@@ -41,7 +42,11 @@ val viewModelModule = module {
     }
 
     viewModel {
-        DictionaryDataViewModel(get())
+        DictionaryDataViewModel(get(), get())
+    }
+
+    viewModel {
+        FavouritesViewModel(get())
     }
 
 }

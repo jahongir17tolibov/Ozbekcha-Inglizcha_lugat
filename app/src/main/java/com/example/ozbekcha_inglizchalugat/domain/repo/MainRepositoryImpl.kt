@@ -1,6 +1,7 @@
 package com.example.ozbekcha_inglizchalugat.domain.repo
 
 import com.example.ozbekcha_inglizchalugat.data.local.AppDao
+import com.example.ozbekcha_inglizchalugat.data.models.DictionaryModel
 import com.example.ozbekcha_inglizchalugat.data.source.LocalDataSource
 import com.example.ozbekcha_inglizchalugat.domain.resource.DictionaryStateUI
 import kotlinx.coroutines.Dispatchers.IO
@@ -15,14 +16,21 @@ class MainRepositoryImpl(private val local: LocalDataSource, private val appDao:
     override suspend fun getDictionaryData(): Flow<DictionaryStateUI> = flow {
         emit(DictionaryStateUI.Loading)
         try {
-            local.getItemsFromJson().let { appDao.insertWords(it) }
             val cachingData = appDao.getAllWords()
-            emit(DictionaryStateUI.Success(cachingData))
+            if (cachingData.isNotEmpty()) {
+                emit(DictionaryStateUI.Success(cachingData))
+            } else {
+                val newData = local.getItemsFromJson()
+                newData.let { appDao.deleteAndInsert(it) }
+                emit(DictionaryStateUI.Success(newData))
+            }
         } catch (e: Exception) {
             emit(DictionaryStateUI.Error(e.localizedMessage ?: "Unknown Error"))
         }
     }.catch {
         emit(DictionaryStateUI.Error(it.localizedMessage ?: "Unknown Error"))
     }.flowOn(IO)
+
+    override suspend fun updateDictionary(words: DictionaryModel) = appDao.updateDictionary(words)
 
 }

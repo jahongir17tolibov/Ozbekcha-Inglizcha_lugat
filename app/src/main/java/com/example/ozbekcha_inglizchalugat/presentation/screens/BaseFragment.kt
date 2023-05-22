@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.ozbekcha_inglizchalugat.R
 import com.example.ozbekcha_inglizchalugat.databinding.FragmentBaseBinding
 import com.example.ozbekcha_inglizchalugat.databinding.MainBaseViewLyBinding
 import com.example.ozbekcha_inglizchalugat.presentation.adapters.ViewPagerAdapter
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.ThemeViewModel
+import com.example.ozbekcha_inglizchalugat.utils.BaseUtils.slideLeftAnim
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,6 +25,7 @@ class BaseFragment : Fragment(R.layout.fragment_base) {
     private lateinit var mainViewBinding: MainBaseViewLyBinding
 
     private val viewModel by viewModel<ThemeViewModel>()
+    private val navigation by lazy { findNavController() }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentBaseBinding.bind(view)
@@ -43,6 +50,26 @@ class BaseFragment : Fragment(R.layout.fragment_base) {
         darkLightBtn.setOnClickListener {
             viewModel.setTheme(viewModel.getTheme.value?.not() ?: false)
         }
+
+        mainViewBinding.searchBtn.setOnClickListener {
+
+            SearchBottomSheet().show(
+                childFragmentManager,
+                SearchBottomSheet.TAG
+            )
+        }
+
+        binding.menuNavigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.favouritesFragment -> {
+                    navigation.navigate(R.id.favouritesFragment)
+                    true
+                }
+
+                else -> false
+            }
+        }
+
     }
 
     private fun changeTheme(themeState: Boolean) = when (themeState) {
@@ -68,7 +95,19 @@ class BaseFragment : Fragment(R.layout.fragment_base) {
             tab.text = tabItems[pos]
         }.attach()
 
-        viewPager.currentItem = 0
+        val registerViewPagerWithNC = object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> navigation.navigate(R.id.action_baseFragment_to_engUzbFragment)
+                    1 -> navigation.navigate(R.id.action_baseFragment_to_uzbEngFragment)
+                }
+            }
+        }
+
+        viewPager.apply {
+            currentItem = 0
+//            registerOnPageChangeCallback(registerViewPagerWithNC)
+        }
 
     }
 

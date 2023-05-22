@@ -6,7 +6,7 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/fragment_favourites"
+            android:id="@+id/favouritesFragment"
             android:icon="@drawable/sharp_star_border_24"
             android:title="Favourites" />
 

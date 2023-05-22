@@ -21,7 +21,10 @@ data class DictionaryModel(
     val uzbek: String,
 
     @ColumnInfo(name = "words_transcript")
-    val transcript: String
+    val transcript: String,
+
+    @ColumnInfo(name = "is_favourite")
+    var isFavourite: Boolean = false
 ) : Parcelable {
 
     @IgnoredOnParcel
@@ -29,8 +32,8 @@ data class DictionaryModel(
     @PrimaryKey(autoGenerate = true)
     var localID: Int? = null
 
-    @IgnoredOnParcel
-    @ColumnInfo(name = "is_favourite")
-    var isFavourite: Boolean = false
+    fun checkFavourite() {
+        isFavourite = !isFavourite
+    }
 
 }
