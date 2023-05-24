@@ -1,7 +1,6 @@
 package com.example.ozbekcha_inglizchalugat
 
 import android.app.Application
-import com.example.ozbekcha_inglizchalugat.data.prefs.AppPreference
 import com.example.ozbekcha_inglizchalugat.di.appModule
 import com.example.ozbekcha_inglizchalugat.di.viewModelModule
 import com.example.ozbekcha_inglizchalugat.data.prefs.DataStoreManager
@@ -20,7 +19,7 @@ class App : Application(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        AppPreference.init(instance)
+
         dataStoreManager = DataStoreManager(instance)
 
         startKoin {

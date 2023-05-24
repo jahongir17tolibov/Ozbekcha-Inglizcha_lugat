@@ -15,7 +15,9 @@
             app:destination="@id/searchBottomSheet" />
         <action
             android:id="@+id/action_baseFragment_to_favouritesFragment"
-            app:destination="@id/favouritesFragment" />
+            app:destination="@id/favouritesFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_baseFragment_to_uzbEngFragment"
             app:destination="@id/uzbEngFragment" />
@@ -27,34 +29,34 @@
         android:id="@+id/engUzbFragment"
         android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.EngUzbFragment"
         android:label="fragment_eng_uzb"
-        tools:layout="@layout/fragment_eng_uzb" >
-        <action
-            android:id="@+id/action_engUzbFragment_to_favouritesFragment"
-            app:destination="@id/favouritesFragment" />
-        <action
-            android:id="@+id/action_engUzbFragment_to_uzbEngFragment"
-            app:destination="@id/uzbEngFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_eng_uzb" />
     <fragment
         android:id="@+id/uzbEngFragment"
         android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.UzbEngFragment"
         android:label="fragment_uzb_eng"
-        tools:layout="@layout/fragment_uzb_eng" >
-        <action
-            android:id="@+id/action_uzbEngFragment_to_favouritesFragment"
-            app:destination="@id/favouritesFragment" />
-        <action
-            android:id="@+id/action_uzbEngFragment_to_engUzbFragment"
-            app:destination="@id/engUzbFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_uzb_eng" />
     <fragment
         android:id="@+id/favouritesFragment"
         android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.FavouritesFragment"
         android:label="fragment_favourites"
-        tools:layout="@layout/fragment_favourites" />
+        tools:layout="@layout/fragment_favourites" >
+        <action
+            android:id="@+id/action_favouritesFragment_to_baseFragment"
+            app:destination="@id/baseFragment"
+            app:popUpTo="@id/favouritesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
     <dialog
         android:id="@+id/searchBottomSheet"
         android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.SearchBottomSheet"
         android:label="fragment_search_bottom_sheet_list_dialog"
         tools:layout="@layout/fragment_search_bottom_sheet_list_dialog" />
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.ozbekcha_inglizchalugat.presentation.screens.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" />
 </navigation>

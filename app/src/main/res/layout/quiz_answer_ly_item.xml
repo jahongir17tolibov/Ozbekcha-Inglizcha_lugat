@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp"
+    android:background="@drawable/variants_btn_bckg"
+    android:paddingHorizontal="20dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/variants_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:elegantTextHeight="true"
+        android:fontFamily="@font/roboto"
+        android:singleLine="true"
+        android:textColor="@color/light_dark_color"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        app:fontFamily="@font/roboto"
+        tools:text="Hello" />
+
+</FrameLayout>

@@ -23,6 +23,9 @@ data class DictionaryModel(
     @ColumnInfo(name = "words_transcript")
     val transcript: String,
 
+    @ColumnInfo(name = "words_type")
+    val type: String,
+
     @ColumnInfo(name = "is_favourite")
     var isFavourite: Boolean = false
 ) : Parcelable {

@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navController = Navigation.findNavController(this, R.id.fragment_container_view_tag)
+        navController = Navigation.findNavController(this, R.id.fragment_container)
 
     }
 }

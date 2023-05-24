@@ -21,11 +21,20 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWords(data: List<DictionaryModel>)
 
+    @Query("UPDATE $CACHE_TABLE_NAME SET is_favourite = :fav WHERE words_id = :id")
+    suspend fun updateDictionaryById(id: String, fav: Boolean)
+
     @Update
     suspend fun updateDictionary(words: DictionaryModel)
 
+    @Query("SELECT * FROM $CACHE_TABLE_NAME WHERE words_id = :id")
+    fun getWordsById(id: String?): DictionaryModel?
+
     @Query("SELECT * FROM $CACHE_TABLE_NAME")
     fun getAllWords(): List<DictionaryModel>
+
+    @Query("DELETE FROM $CACHE_TABLE_NAME WHERE words_id = :id")
+    suspend fun deleteWord(id: String?)
 
     @Query("DELETE FROM $CACHE_TABLE_NAME")
     fun deleteAll()
@@ -43,8 +52,8 @@ interface AppDao {
     @Query("SELECT * FROM $FAV_TABLE_NAME ORDER BY english ASC")
     fun getAllFavWords(): Flow<List<FavouritesModel>>
 
-    @Query("SELECT * FROM $FAV_TABLE_NAME WHERE english = :eng")
-    fun getFavWordsName(eng: String?): Flow<FavouritesModel>
+    @Query("SELECT * FROM $FAV_TABLE_NAME WHERE id = :id")
+    fun getFavWordsName(id: String?): FavouritesModel?
 
     @Query("DELETE FROM $FAV_TABLE_NAME")
     suspend fun deleteAllFavWords()
@@ -54,6 +63,9 @@ interface AppDao {
 
     @Query("DELETE FROM $FAV_TABLE_NAME WHERE id = :id")
     suspend fun deleteFavWord(id: String?)
+
+    @Query("SELECT * FROM $FAV_TABLE_NAME")
+    fun getFavouritesForQuiz(): List<FavouritesModel>
     /*******************************************************/
 
 }

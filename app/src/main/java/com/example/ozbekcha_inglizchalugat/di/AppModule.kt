@@ -5,11 +5,14 @@ import com.example.ozbekcha_inglizchalugat.data.local.AppDatabase
 import com.example.ozbekcha_inglizchalugat.data.source.LocalDataSource
 import com.example.ozbekcha_inglizchalugat.data.prefs.DataStoreManager
 import com.example.ozbekcha_inglizchalugat.domain.repo.MainRepository
-import com.example.ozbekcha_inglizchalugat.domain.repo.MainRepositoryImpl
+import com.example.ozbekcha_inglizchalugat.domain.repo.QuizRepository
+import com.example.ozbekcha_inglizchalugat.domain.repo.impls.MainRepositoryImpl
 import com.example.ozbekcha_inglizchalugat.domain.repo.RoomRepository
-import com.example.ozbekcha_inglizchalugat.domain.repo.RoomRepositoryImpl
+import com.example.ozbekcha_inglizchalugat.domain.repo.impls.QuizRepositoryImpl
+import com.example.ozbekcha_inglizchalugat.domain.repo.impls.RoomRepositoryImpl
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.DictionaryDataViewModel
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.FavouritesViewModel
+import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.QuizViewModel
 import com.example.ozbekcha_inglizchalugat.presentation.viewmodels.ThemeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -33,6 +36,8 @@ val appModule = module {
 
     factory<RoomRepository> { RoomRepositoryImpl(get()) }
 
+    factory<QuizRepository> { QuizRepositoryImpl(get())  }
+
 }
 
 val viewModelModule = module {
@@ -46,7 +51,11 @@ val viewModelModule = module {
     }
 
     viewModel {
-        FavouritesViewModel(get())
+        FavouritesViewModel(get(), get())
+    }
+
+    viewModel {
+        QuizViewModel(get())
     }
 
 }

@@ -14,7 +14,8 @@ data class FavouritesModel(
     val english: String,
     val transcript: String,
     val uzbek: String,
-    val isFavourite: Boolean = false
+    val type: String,
+    var isFavourite: Boolean = false
 ) : Parcelable {
 
     @IgnoredOnParcel

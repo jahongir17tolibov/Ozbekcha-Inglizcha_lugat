@@ -19,4 +19,7 @@
     <color name="light_dark_color">#090E0D</color>
     <color name="letter_item_color">#F5F3FF</color>
     <color name="letter_one_word_color">#FFFFFFFF</color>
+    <color name="search_bckg_color">#CDCDCD</color>
+    <color name="dialog_buttons_color">#059669</color>
+    <color name="dialog_background_color">#FFF3DD</color>
 </resources>

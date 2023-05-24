@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ozbekcha_inglizchalugat.R
 import com.example.ozbekcha_inglizchalugat.data.models.DictionaryModel
 import com.example.ozbekcha_inglizchalugat.databinding.LettersItemLyBinding
+import com.example.ozbekcha_inglizchalugat.utils.BaseUtils.initDialogForAdapter
 
 class DictionaryEngAdapter : RecyclerView.Adapter<DictionaryEngAdapter.LettersItemHolder>() {
 
@@ -25,7 +26,8 @@ class DictionaryEngAdapter : RecyclerView.Adapter<DictionaryEngAdapter.LettersIt
         onItemClickListener = listener
     }
 
-    inner class LettersItemHolder(val b: LettersItemLyBinding) : RecyclerView.ViewHolder(b.root) {
+    inner class LettersItemHolder(private val b: LettersItemLyBinding) :
+        RecyclerView.ViewHolder(b.root) {
 
         @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
         fun bind(result: DictionaryModel) {
@@ -44,6 +46,7 @@ class DictionaryEngAdapter : RecyclerView.Adapter<DictionaryEngAdapter.LettersIt
                     onItemClickListener?.invoke(result)
                     notifyDataSetChanged()
                 }
+
             }
 
         }
@@ -60,6 +63,10 @@ class DictionaryEngAdapter : RecyclerView.Adapter<DictionaryEngAdapter.LettersIt
         val itemData = baseList[position]
 
         holder.bind(itemData)
+
+        holder.itemView.setOnClickListener {
+            initDialogForAdapter(holder.itemView.context, itemData)
+        }
 
     }
 

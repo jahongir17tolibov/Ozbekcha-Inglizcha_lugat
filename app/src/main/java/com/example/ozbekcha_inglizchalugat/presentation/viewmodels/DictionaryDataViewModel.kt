@@ -9,6 +9,7 @@ import com.example.ozbekcha_inglizchalugat.domain.repo.MainRepository
 import com.example.ozbekcha_inglizchalugat.domain.repo.RoomRepository
 import com.example.ozbekcha_inglizchalugat.domain.resource.DictionaryStateUI
 import com.example.ozbekcha_inglizchalugat.utils.Constants.LOG_TXT
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -27,22 +28,19 @@ class DictionaryDataViewModel(
         }
     }
 
-    fun toggleFavourite(dictionary: DictionaryModel) = viewModelScope.launch {
+    fun toggleFavourite(dictionary: DictionaryModel) = viewModelScope.launch(IO) {
         if (dictionary.isFavourite) {
-            dictionary.id.let {
-                roomRepo.deleteFavouriteWord(it)
-                Log.d(LOG_TXT, "toggleFavourite: $it")
-            }
+            dictionary.id.let { roomRepo.deleteFavouriteWord(it) }
         } else {
             val favModel = FavouritesModel(
                 dictionary.id,
                 dictionary.english,
                 dictionary.transcript,
                 dictionary.uzbek,
+                dictionary.type,
                 isFavourite = true
             )
             roomRepo.insertFavouriteWords(favModel)
-            Log.d(LOG_TXT, favModel.toString())
         }
         dictionary.checkFavourite()
         repo.updateDictionary(dictionary)

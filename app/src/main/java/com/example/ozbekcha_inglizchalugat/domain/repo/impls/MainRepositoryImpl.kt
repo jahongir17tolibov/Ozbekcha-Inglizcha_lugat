@@ -1,8 +1,9 @@
-package com.example.ozbekcha_inglizchalugat.domain.repo
+package com.example.ozbekcha_inglizchalugat.domain.repo.impls
 
 import com.example.ozbekcha_inglizchalugat.data.local.AppDao
 import com.example.ozbekcha_inglizchalugat.data.models.DictionaryModel
 import com.example.ozbekcha_inglizchalugat.data.source.LocalDataSource
+import com.example.ozbekcha_inglizchalugat.domain.repo.MainRepository
 import com.example.ozbekcha_inglizchalugat.domain.resource.DictionaryStateUI
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow

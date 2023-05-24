@@ -23,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 
@@ -30,7 +31,7 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
     private var _binding: FragmentSearchBottomSheetListDialogBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModel<DictionaryDataViewModel>()
+    private val viewModel by activityViewModel<DictionaryDataViewModel>()
     private val dictionaryEngAdapter by lazy { DictionaryEngAdapter() }
     private var list: List<DictionaryModel> = emptyList()
 
@@ -52,6 +53,10 @@ class SearchBottomSheet : BottomSheetDialogFragment() {
 
         binding.backBtn.setOnClickListener {
             dismiss()
+        }
+
+        dictionaryEngAdapter.setOnStarClickListener {
+            viewModel.toggleFavourite(it)
         }
 
     }

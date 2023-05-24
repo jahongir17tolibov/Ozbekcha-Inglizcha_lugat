@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ozbekcha_inglizchalugat.R
 import com.example.ozbekcha_inglizchalugat.data.models.DictionaryModel
 import com.example.ozbekcha_inglizchalugat.databinding.LettersItemLyBinding
+import com.example.ozbekcha_inglizchalugat.utils.BaseUtils.initDialogForAdapter
 
 class DictionaryUzbAdapter : RecyclerView.Adapter<DictionaryUzbAdapter.LettersItemHolder>() {
 
@@ -21,13 +22,13 @@ class DictionaryUzbAdapter : RecyclerView.Adapter<DictionaryUzbAdapter.LettersIt
 
     private var onItemClickListener: ((DictionaryModel) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: ((DictionaryModel) -> Unit)? = null) {
+    fun setOnStarAddClickListener(listener: ((DictionaryModel) -> Unit)? = null) {
         onItemClickListener = listener
     }
 
     inner class LettersItemHolder(val b: LettersItemLyBinding) : RecyclerView.ViewHolder(b.root) {
 
-        @SuppressLint("ResourceAsColor")
+        @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
         fun bind(result: DictionaryModel) {
             val captLetter = result.uzbek.take(1)
             b.apply {
@@ -39,6 +40,12 @@ class DictionaryUzbAdapter : RecyclerView.Adapter<DictionaryUzbAdapter.LettersIt
                 else R.color.light_dark_color
                 val color = ContextCompat.getColor(itemView.context, colorId)
                 addToFavouritesStar.imageTintList = ColorStateList.valueOf(color)
+
+                b.addToFavouritesStar.setOnClickListener {
+                    onItemClickListener?.invoke(result)
+                    notifyDataSetChanged()
+                }
+
             }
 
         }
@@ -57,8 +64,7 @@ class DictionaryUzbAdapter : RecyclerView.Adapter<DictionaryUzbAdapter.LettersIt
         holder.bind(itemData)
 
         holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(itemData)
-            notifyDataSetChanged()
+            initDialogForAdapter(holder.itemView.context, itemData)
         }
 
     }

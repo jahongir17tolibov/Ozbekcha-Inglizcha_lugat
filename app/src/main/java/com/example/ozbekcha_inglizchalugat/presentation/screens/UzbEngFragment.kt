@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ozbekcha_inglizchalugat.R
@@ -20,14 +21,16 @@ import com.example.ozbekcha_inglizchalugat.utils.BaseUtils.showSnackToast
 import com.example.ozbekcha_inglizchalugat.utils.Constants.LOG_TXT
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UzbEngFragment : Fragment(R.layout.fragment_uzb_eng) {
     private var _binding: FragmentUzbEngBinding? = null
     private lateinit var binding: FragmentUzbEngBinding
 
-    private val viewModel by viewModel<DictionaryDataViewModel>()
+    private val viewModel by activityViewModel<DictionaryDataViewModel>()
     private val dictionaryUzbAdapter by lazy { DictionaryUzbAdapter() }
+    private val navigation by lazy { findNavController() }
     private var list = emptyList<DictionaryModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,8 +73,13 @@ class UzbEngFragment : Fragment(R.layout.fragment_uzb_eng) {
     }
 
     private fun initClicks() {
-        dictionaryUzbAdapter.setOnItemClickListener {
-            it.checkFavourite()
+        dictionaryUzbAdapter.setOnStarAddClickListener {
+            viewModel.toggleFavourite(it)
+        }
+
+        binding.floatingAcBtn.setOnClickListener {
+            val action = BaseFragmentDirections.actionBaseFragmentToFavouritesFragment()
+            navigation.navigate(action)
         }
     }
 

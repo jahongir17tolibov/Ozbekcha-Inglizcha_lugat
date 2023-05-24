@@ -44,7 +44,7 @@
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/search_bckg_color"
                 android:iconifiedByDefault="false"
                 android:queryHint="search..." />
 
@@ -57,7 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_container"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        app:indicatorColor="@color/light_dark_color" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/letters_list"

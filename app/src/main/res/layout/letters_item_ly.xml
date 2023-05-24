@@ -83,12 +83,13 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/speech_voice"
+        android:id="@+id/delete_btn"
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:layout_marginHorizontal="10dp"
-        android:src="@drawable/round_volume_up_24"
-        android:visibility="gone" />
+        android:src="@drawable/round_delete_outline_24"
+        android:visibility="gone"
+        app:tint="@color/light_dark_color"/>
 
     <ImageView
         android:id="@+id/add_to_favourites_star"

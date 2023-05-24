@@ -6,6 +6,8 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.ozbekcha_inglizchalugat.R
@@ -24,6 +26,7 @@ class BaseFragment : Fragment(R.layout.fragment_base) {
     private lateinit var binding: FragmentBaseBinding
     private lateinit var mainViewBinding: MainBaseViewLyBinding
 
+    private lateinit var navController: NavController
     private val viewModel by viewModel<ThemeViewModel>()
     private val navigation by lazy { findNavController() }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,6 +35,7 @@ class BaseFragment : Fragment(R.layout.fragment_base) {
         mainViewBinding = binding.fragmentsView
         _binding = binding
 
+        setNavigationComponent()
         setupDrawerLy()
         setupViewPager()
         changeThemeViewModel()
@@ -41,6 +45,13 @@ class BaseFragment : Fragment(R.layout.fragment_base) {
 
     private fun changeThemeViewModel() = viewModel.getTheme.observe(viewLifecycleOwner) { isDark ->
         changeTheme(isDark)
+    }
+
+    private fun setNavigationComponent() {
+        val navHostFragment =
+            requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+
+        navController = navHostFragment.navController
     }
 
     private fun initClicks() {
@@ -95,18 +106,11 @@ class BaseFragment : Fragment(R.layout.fragment_base) {
             tab.text = tabItems[pos]
         }.attach()
 
-        val registerViewPagerWithNC = object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    0 -> navigation.navigate(R.id.action_baseFragment_to_engUzbFragment)
-                    1 -> navigation.navigate(R.id.action_baseFragment_to_uzbEngFragment)
-                }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val position = adapter.getFragmentIds(destination.id)
+            if (position != -1) {
+                viewPager.currentItem = position
             }
-        }
-
-        viewPager.apply {
-            currentItem = 0
-//            registerOnPageChangeCallback(registerViewPagerWithNC)
         }
 
     }
